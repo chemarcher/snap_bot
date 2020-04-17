@@ -3,6 +3,7 @@ import discord
 from urllib.parse import quote
 # from dotenv import load_dotenv
 import requests, time
+import json
 
 def recorder(msgs, name, price, snapend, snapbuyers):
     name = name.replace('<', '**<')
@@ -68,10 +69,11 @@ for match in matches:
 msg2 = '\n'.join(msgs2)
 
 # load_dotenv()
-# TOKEN = os.getenv('DISCORD_TOKEN')
-TOKEN='Njk5MTYzNDAyMjk1MDUwMjYx.XpTGow.QhojjOnoEqc31qU2TTJ3ML2hs18'
-GUILD='無雙RO團'
-# GUILD = os.getenv('DISCORD_GUILD')
+with open('token.json', 'r') as f:
+    tokens = json.load(f)
+TOKEN = tokens['bot_token']
+GUILD = tokens['guild_name'].decode()
+print(GUILD)
 
 client = discord.Client()
 
