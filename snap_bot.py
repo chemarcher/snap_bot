@@ -72,8 +72,8 @@ msg2 = '\n'.join(msgs2)
 with open('token.json', 'r') as f:
     tokens = json.load(f)
 TOKEN = tokens['bot_token']
-GUILD = tokens['guild_name'].decode()
-print(GUILD)
+GUILD = tokens['guild_name']
+# print(GUILD)
 
 client = discord.Client()
 
