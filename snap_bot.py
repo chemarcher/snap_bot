@@ -38,19 +38,16 @@ msg = '\n'.join(msgs)
 time.sleep(5)
 
 url_api = 'https://poring.world/api'
-matches = []
-matches += ['+3 monocle (broken)']
+matches = ['+3 monocle (broken)']
 matches += ['+4 monocle (broken)']
-# matches += ['+3 Dragon Glow (broken)']
-# matches += ['+4 Dragon Glow (broken)']
+matches += ['+3 Dragon Glow (broken)']
+matches += ['+4 Dragon Glow (broken)']
 matches += ['+3 Mystery Bow [1] (broken)']
 matches += ['+4 Mystery Bow [1] (broken)']
 matches += ['+3 Malang Snow Crab [1] (broken)']
 matches += ['+4 Malang Snow Crab [1] (broken)']
 matches += ['+3 Ranger Clothes (broken)']
 matches += ['+4 Ranger Clothes (broken)']
-cates = []
-cates += [1040, 1041, 1042, 1043, 1044]
 msgs2 = []
 for match in matches:
 # url = 'https://poring.world/api/search?order=popularity&rarity=&inStock=1&modified=&category=&endCategory=&q=%2B3%20monocle%20%28broken%29'
