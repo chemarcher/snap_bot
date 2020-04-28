@@ -122,20 +122,21 @@ if __name__ == '__main__':
             msg = ''
             try:
                 msg = query()
-            except:
+            except Exception as e:
+                print(e)
                 time.sleep(30*60)
                 pass
             if msg != '':
                 # write_dict(msg)
-                # user = client.get_user(587469380372135960) # chemarcher
-                # await user.send(msg)
+                user = client.get_user(587469380372135960) # chemarcher
+                await user.send(msg)
             # channel = client.get_channel(699169724797419530) # test
-                channel = client.get_channel(679428120989663245) # snap
-                await channel.send(msg)
-                channel = client.get_channel(699786590951571456) # archangel
-                await channel.send(msg)
-                channel = client.get_channel(700435689405153370) #snowland
-                await channel.send(msg)
+                #channel = client.get_channel(679428120989663245) # snap
+                #await channel.send(msg)
+                #channel = client.get_channel(699786590951571456) # archangel
+                #await channel.send(msg)
+                #channel = client.get_channel(700435689405153370) #snowland
+                #await channel.send(msg)
             # if len(msgs2) > 0:
             #     user = client.get_user(587469380372135960) # chemarcher
             #     await user.send(msg2)
