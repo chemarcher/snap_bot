@@ -33,7 +33,7 @@ def query():
     msgs = []
     # msgs.append("What's on poring.world now:")
     for result in results:
-        name, lastrec, id_ = result['name'], result['lastRecord'], result['id']
+        name, lastrec, id_ = result['name'].encode('utf-8').decode('utf-8'), result['lastRecord'], result['id']
         price, snapend, snapbuyers = lastrec['price'], lastrec['snapEnd'], lastrec['snapBuyers']
         price = '{:,}'.format(price)
         if snapend > time.time() and (id_ not in df['id'].values.tolist()):
