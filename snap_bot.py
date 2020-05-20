@@ -67,7 +67,7 @@ def query():
     time.sleep(5)
 
     url_api = 'https://poring.world/api'
-    match = ['+3 Legion Plate Armor (broken)']
+    matches = ['+3 Legion Plate Armor (broken)']
     # matches = ['+3 monocle (broken)']
     # matches += ['+4 monocle (broken)']
     # matches += ['+3 Dragon Glow (broken)']
@@ -119,7 +119,7 @@ if __name__ == '__main__':
     #     print([member for guild in client.guilds for member in guild.members if 'chemarcher' in member.name])
     @client.event
     async def on_ready():
-        for i in range(999999999):
+        for i in range(999999999999999999):
             t0 = time.time()
             msg = ''
             msg2 = ''
