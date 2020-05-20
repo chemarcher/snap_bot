@@ -30,7 +30,9 @@ def query():
     results = req.json()
     records = []
     msg = ''
+    msg2 = ''
     msgs = []
+    msgs2 = []
     # msgs.append("What's on poring.world now:")
     for result in results:
         name, lastrec, id_ = result['name'].encode('utf-8').decode('utf-8'), result['lastRecord'], result['id']
@@ -59,43 +61,43 @@ def query():
         # print(df)
         df.to_csv(frec, index=False)
 
-    return msg
-
 # msg = query()
 
 # # dms
-# time.sleep(5)
+    time.sleep(5)
 
-# url_api = 'https://poring.world/api'
-# matches = ['+3 monocle (broken)']
-# matches += ['+4 monocle (broken)']
-# # matches += ['+3 Dragon Glow (broken)']
-# # matches += ['+4 Dragon Glow (broken)']
-# matches += ['+3 Mystery Bow [1] (broken)']
-# matches += ['+4 Mystery Bow [1] (broken)']
-# matches += ['+3 Malang Snow Crab [1] (broken)']
-# matches += ['+4 Malang Snow Crab [1] (broken)']
-# matches += ['+3 Ranger Clothes (broken)']
-# matches += ['+4 Ranger Clothes (broken)']
-# msgs2 = []
-# for match in matches:
-# # url = 'https://poring.world/api/search?order=popularity&rarity=&inStock=1&modified=&category=&endCategory=&q=%2B3%20monocle%20%28broken%29'
-#     search = 'popularity&rarity=&inStock=1&modified=&category=&endCategory=&q=' + quote(match)
-#     url = url_api + '/search?order=' + search
-#     req = requests.get(url)
-#     results = req.json()
-#     if len(results) > 0:
-#         for i, result in enumerate(results):
-#             name, lastrec = result['name'], result['lastRecord']
-#             price, snapend, snapbuyers = lastrec['price'], lastrec['snapEnd'], lastrec['snapBuyers']
-#             price = '{:,}'.format(price)
-#             if snapend > time.time():
-#                 if i == 0:
-#                     msgs2.append("Your search on poring.world now:")
-#                 messenger(msgs2, name, price, time.localtime(snapend), snapbuyers)
-#     time.sleep(5)
+    url_api = 'https://poring.world/api'
+    match = ['+3 Legion Plate Armor (broken)']
+    # matches = ['+3 monocle (broken)']
+    # matches += ['+4 monocle (broken)']
+    # matches += ['+3 Dragon Glow (broken)']
+    # matches += ['+4 Dragon Glow (broken)']
+    # matches += ['+3 Mystery Bow [1] (broken)']
+    # matches += ['+4 Mystery Bow [1] (broken)']
+    # matches += ['+3 Malang Snow Crab [1] (broken)']
+    # matches += ['+4 Malang Snow Crab [1] (broken)']
+    # matches += ['+3 Ranger Clothes (broken)']
+    # matches += ['+4 Ranger Clothes (broken)']
+    for match in matches:
+    # url = 'https://poring.world/api/search?order=popularity&rarity=&inStock=1&modified=&category=&endCategory=&q=%2B3%20monocle%20%28broken%29'
+        search = 'popularity&rarity=&inStock=1&modified=&category=&endCategory=&q=' + quote(match)
+        url = url_api + '/search?order=' + search
+        req = requests.get(url)
+        results = req.json()
+        if len(results) > 0:
+            for i, result in enumerate(results):
+                name, lastrec, id_ = result['name'].encode('utf-8').decode('utf-8'), result['lastRecord'], result['id']
+                price, snapend, snapbuyers = lastrec['price'], lastrec['snapEnd'], lastrec['snapBuyers']
+                price = '{:,}'.format(price)
+                if snapend > time.time():
+                    # if i == 0:
+                        # msgs2.append("Your search on poring.world now:")
+                    msgs2 = messenger(msgs2, name, price, time.localtime(snapend), snapbuyers)
+        time.sleep(5)
 
-# msg2 = '\n'.join(msgs2)
+    msg2 = '\n'.join(msgs2)
+
+    return msg, msg2
 
 
 if __name__ == '__main__':
@@ -120,26 +122,32 @@ if __name__ == '__main__':
         for i in range(999999999):
             t0 = time.time()
             msg = ''
+            msg2 = ''
             try:
-                msg = query()
+                msg, msg2 = query()
             except Exception as e:
                 print(e)
                 time.sleep(30*60)
                 pass
+            sent = False
             if msg != '':
-                # write_dict(msg)
-                # user = client.get_user(587469380372135960) # chemarcher
-                # await user.send(msg)
-            # channel = client.get_channel(699169724797419530) # test
-                channel = client.get_channel(679428120989663245) # snap
-                await channel.send(msg)
-                channel = client.get_channel(699786590951571456) # archangel
-                await channel.send(msg)
-                channel = client.get_channel(700435689405153370) #snowland
-                await channel.send(msg)
-            # if len(msgs2) > 0:
-            #     user = client.get_user(587469380372135960) # chemarcher
-            #     await user.send(msg2)
+                while not sent:
+                    try:
+                        # write_dict(msg)
+                        # user = client.get_user(587469380372135960) # chemarcher
+                        # await user.send(msg)
+                        channel = client.get_channel(679428120989663245) # snap
+                        await channel.send(msg)
+                        channel = client.get_channel(699786590951571456) # archangel
+                        await channel.send(msg)
+                        channel = client.get_channel(700435689405153370) #snowland
+                        await channel.send(msg)
+                        sent = True
+                    except:
+                        pass
+            if msg != '':
+                user = client.get_user(587469380372135960) # chemarcher
+                await user.send(msg2)
             # channel = client.get_channel(700330164881457155)
             # await channel.send(msg)
             # print([guild.channels for guild in client.guilds])
