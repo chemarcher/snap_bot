@@ -102,7 +102,7 @@ def query():
 
 if __name__ == '__main__':
     # time interval between searches
-    t = 5 # minutes
+    t = 10 # minutes
 
     # load_dotenv()
     with open('token.json', 'r') as f:
@@ -127,7 +127,7 @@ if __name__ == '__main__':
                 msg, msg2 = query()
             except Exception as e:
                 print(e)
-                time.sleep(5*60)
+                time.sleep(10*60)
                 pass
             sent = False
             if msg != '':
