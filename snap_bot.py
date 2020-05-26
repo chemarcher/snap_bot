@@ -127,7 +127,7 @@ if __name__ == '__main__':
                 msg, msg2 = query()
             except Exception as e:
                 print(e)
-                time.sleep(30*60)
+                time.sleep(5*60)
                 pass
             sent = False
             if msg != '':
