@@ -144,8 +144,10 @@ if __name__ == '__main__':
                         await channel.send(msg)
                         channel = client.get_channel(700435689405153370) #snowland
                         await channel.send(msg)
-                        #channel = client.get_channel(686690245319589974) #bbx
-                        #await channel.send(msg)
+                        channel = client.get_channel(686690245319589974) #bbx
+                        await channel.send(msg)
+                        channel = client.get_channel(654216840972861450) #vendoppel
+                        await channel.send(msg)
                         sent = True
                     except Exception as e:
                         user = client.get_user(587469380372135960) # chemarcher
