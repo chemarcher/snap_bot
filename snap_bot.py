@@ -42,7 +42,8 @@ def query():
             if ('<' in name and '>' in name ) or \
             ('card' in name.lower() and snapbuyers > 15) or \
             ('blueprint' in name.lower() and snapbuyers > 15) or \
-            (snapbuyers > 100):
+            (snapbuyers > 100) or \
+            ('fenril' in name.lower()):
                 msgs = messenger(msgs, name, price, time.localtime(snapend), snapbuyers)
                 records = recorder(records, snapend, id_)
     if len(msgs) > 0:
