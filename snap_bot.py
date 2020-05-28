@@ -64,7 +64,7 @@ def query():
 # msg = query()
 
 # # dms
-    time.sleep(5)
+    time.sleep(30)
 
     url_api = 'https://poring.world/api'
     matches = ['+3 Legion Plate Armor (broken)']
@@ -102,7 +102,7 @@ def query():
 
 if __name__ == '__main__':
     # time interval between searches
-    t = 10 # minutes
+    t = 5 # minutes
 
     # load_dotenv()
     with open('token.json', 'r') as f:
@@ -126,7 +126,8 @@ if __name__ == '__main__':
             try:
                 msg, msg2 = query()
             except Exception as e:
-                print(e)
+                user = client.get_user(587469380372135960) # chemarcher
+                await user.send(e)
                 time.sleep(10*60)
                 pass
             sent = False
@@ -142,12 +143,14 @@ if __name__ == '__main__':
                         await channel.send(msg)
                         channel = client.get_channel(700435689405153370) #snowland
                         await channel.send(msg)
-                        channel = client.get_channel(686690245319589974) #bbx
-                        await channel.send(msg)
+                        #channel = client.get_channel(686690245319589974) #bbx
+                        #await channel.send(msg)
                         sent = True
-                    except:
+                    except Exception as e:
+                        user = client.get_user(587469380372135960) # chemarcher
+                        await user.send(e)
                         pass
-            if msg != '':
+            if msg2 != '':
                 user = client.get_user(587469380372135960) # chemarcher
                 await user.send(msg2)
             # channel = client.get_channel(700330164881457155)
