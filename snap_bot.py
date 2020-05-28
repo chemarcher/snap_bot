@@ -133,26 +133,24 @@ if __name__ == '__main__':
                 pass
             sent = False
             if msg != '':
-                while not sent:
-                    try:
-                        # write_dict(msg)
-                        # user = client.get_user(587469380372135960) # chemarcher
-                        # await user.send(msg)
-                        channel = client.get_channel(679428120989663245) # snap
-                        await channel.send(msg)
-                        channel = client.get_channel(699786590951571456) # archangel
-                        await channel.send(msg)
-                        channel = client.get_channel(700435689405153370) #snowland
-                        await channel.send(msg)
-                        channel = client.get_channel(686690245319589974) #bbx
-                        await channel.send(msg)
-                        channel = client.get_channel(654216840972861450) #vendoppel
-                        await channel.send(msg)
-                        sent = True
-                    except Exception as e:
-                        user = client.get_user(587469380372135960) # chemarcher
-                        await user.send(e)
-                        pass
+                try:
+                    # write_dict(msg)
+                    #user = client.get_user(587469380372135960) # chemarcher
+                    #await user.send(msg)
+                    channel = client.get_channel(715710221258981407) # snap
+                    await channel.send(msg)
+                    channel = client.get_channel(699786590951571456) # archangel
+                    await channel.send(msg)
+                    channel = client.get_channel(700435689405153370) #snowland
+                    await channel.send(msg)
+                    channel = client.get_channel(686690245319589974) #bbx
+                    await channel.send(msg)
+                    channel = client.get_channel(655571314752487462) #vendoppel
+                    await channel.send(msg)
+                except Exception as e:
+                    user = client.get_user(587469380372135960) # chemarcher
+                    await user.send(e)
+                    pass
             if msg2 != '':
                 user = client.get_user(587469380372135960) # chemarcher
                 await user.send(msg2)
