@@ -109,6 +109,12 @@ if __name__ == '__main__':
     with open('token.json', 'r') as f:
         tokens = json.load(f)
     TOKEN = tokens['bot_token']
+    ro_id = tokens['ro']
+    arch_id = tokens['arch']
+    snow_id = tokens['snow']
+    bbx_id = tokens['bbx']
+    doppel_id = tokens['doppel']
+    chem_id = tokens['chemarcher']
     # GUILD = tokens['guild_name']
     # print(GUILD)
 
@@ -127,7 +133,7 @@ if __name__ == '__main__':
             try:
                 msg, msg2 = query()
             except Exception as e:
-                user = client.get_user(587469380372135960) # chemarcher
+                user = client.get_user(chem_id) # chemarcher
                 await user.send(e)
                 time.sleep(10*60)
                 pass
@@ -138,28 +144,28 @@ if __name__ == '__main__':
                     #user = client.get_user(587469380372135960) # chemarcher
                     #await user.send(msg)
                     await client.wait_until_ready()
-                    channel = client.get_channel(715710221258981407) # snap
+                    channel = client.get_channel(ro_id) # snap
                     await channel.send(msg)
                     await client.wait_until_ready()
-                    channel = client.get_channel(699786590951571456) # archangel
+                    channel = client.get_channel(arch_id) # archangel
                     await channel.send(msg)
                     await client.wait_until_ready()
-                    channel = client.get_channel(700435689405153370) #snowland
+                    channel = client.get_channel(snow_id) #snowland
                     await channel.send(msg)
                     await client.wait_until_ready()
-                    channel = client.get_channel(686690245319589974) #bbx
+                    channel = client.get_channel(bbx_id) #bbx
                     await channel.send(msg)
                     await client.wait_until_ready()
-                    channel = client.get_channel(655571314752487462) #vendoppel
+                    channel = client.get_channel(doppel_id) #vendoppel
                     await channel.send(msg)
                 except Exception as e:
                     await client.wait_until_ready()
-                    user = client.get_user(587469380372135960) # chemarcher
+                    user = client.get_user(chem_id) # chemarcher
                     await user.send(e)
                     pass
             if msg2 != '':
                 await client.wait_until_ready()
-                user = client.get_user(587469380372135960) # chemarcher
+                user = client.get_user(chem_id) # chemarcher
                 await user.send(msg2)
             # channel = client.get_channel(700330164881457155)
             # await channel.send(msg)
