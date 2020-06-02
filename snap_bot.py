@@ -35,7 +35,7 @@ def query():
     msgs2 = []
     # msgs.append("What's on poring.world now:")
     for result in results:
-        name, lastrec, id_ = result['name'].encode('utf-8').decode('utf-8'), result['lastRecord'], result['id']
+        name, lastrec, id_ = str(result['name'].encode('utf-8')), result['lastRecord'], result['id']
         price, snapend, snapbuyers = lastrec['price'], lastrec['snapEnd'], lastrec['snapBuyers']
         price = '{:,}'.format(price)
         if snapend > time.time() and (id_ not in df['id'].values.tolist()):
@@ -137,21 +137,28 @@ if __name__ == '__main__':
                     # write_dict(msg)
                     #user = client.get_user(587469380372135960) # chemarcher
                     #await user.send(msg)
+                    await client.wait_until_ready()
                     channel = client.get_channel(715710221258981407) # snap
                     await channel.send(msg)
+                    await client.wait_until_ready()
                     channel = client.get_channel(699786590951571456) # archangel
                     await channel.send(msg)
+                    await client.wait_until_ready()
                     channel = client.get_channel(700435689405153370) #snowland
                     await channel.send(msg)
+                    await client.wait_until_ready()
                     channel = client.get_channel(686690245319589974) #bbx
                     await channel.send(msg)
+                    await client.wait_until_ready()
                     channel = client.get_channel(655571314752487462) #vendoppel
                     await channel.send(msg)
                 except Exception as e:
+                    await client.wait_until_ready()
                     user = client.get_user(587469380372135960) # chemarcher
                     await user.send(e)
                     pass
             if msg2 != '':
+                await client.wait_until_ready()
                 user = client.get_user(587469380372135960) # chemarcher
                 await user.send(msg2)
             # channel = client.get_channel(700330164881457155)
