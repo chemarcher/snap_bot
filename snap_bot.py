@@ -139,8 +139,8 @@ if __name__ == '__main__':
     with open('token.json', 'r') as f:
         tokens = json.load(f)
     TOKEN = tokens['bot_token']
-    # id_keys = ['ro'] #, 'arch', 'snow', 'bbx', 'doppel']
-    id_keys = ['chemarcher']
+    id_keys = ['ro', 'arch', 'snow', 'bbx', 'doppel']
+    # id_keys = ['chemarcher']
 
     client = discord.Client()
 
@@ -171,7 +171,7 @@ if __name__ == '__main__':
                         if msg != '':
                             id_ = tokens[id_key]
                             await client.wait_until_ready()
-                            channel = client.get_user(id_)
+                            channel = client.get_channel(id_)
                             await channel.send(msg)
                             recorder(record_dict, csvf)
                 except Exception as e:
