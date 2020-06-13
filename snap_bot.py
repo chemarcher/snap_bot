@@ -52,6 +52,7 @@ def query():
         url = 'https://poring.world/api/search?order=popularity&rarity=%s&inStock=1&modified=&category=&endCategory=' %(rarity)
         req = requests.get(url)
         results = req.json()
+        ids = []
         # msgs.append("What's on poring.world now:")
         for result in results:
             name, lastrec, id_ = html.unescape(result['name']), result['lastRecord'], result['id']
@@ -65,15 +66,13 @@ def query():
                 (snapbuyers > 100) and \
                 ('+12 Rosa Bracelet' in name) or \
                 ('+12 Rune Boots' in name) or \
-                ('Survival Ring' in name and '<' in name and '>' in name) and \
-                ('Harpy' not in name) and \
-                ('Familiar' not in name) and \
-                ('Munak' not in name) and \
-                ('Andre' not in name):
-                    record_dict[id_] = {'name': name, #.decode('ascii'), 
-                                        'price': price,
-                                        'snapend': snapend,
-                                        'snapbuyers': snapbuyers}
+                ('Survival Ring' in name and '<' in name and '>' in name):
+                    if name.split(' ')[0].lower() not in ['harpy', 'familiar', 'munak', 'andre']:
+                        if id_ not in ids:
+                            record_dict[id_] = {'name': name, #.decode('ascii'), 
+                                                'price': price,
+                                                'snapend': snapend,
+                                                'snapbuyers': snapbuyers}
                     # msgs = messenger(msgs, name, price, time.localtime(snapend), snapbuyers)
                     # records = recorder(records, snapend, id_)
         time.sleep(5)
