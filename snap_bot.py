@@ -66,7 +66,8 @@ def query():
                 (snapbuyers > 100) and \
                 ('+12 Rosa Bracelet' in name) or \
                 ('+12 Rune Boots' in name) or \
-                ('Survival Ring' in name and '<' in name and '>' in name):
+                ('Survival Ring' in name and '<' in name and '>' in name) or \
+                ('+15' in name and snapbuyers > 2):
                     if name.split(' ')[0].lower() not in ['harpy', 'familiar', 'munak', 'andre']:
                         if id_ not in ids:
                             record_dict[id_] = {'name': name, #.decode('ascii'), 
