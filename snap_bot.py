@@ -59,7 +59,7 @@ def query():
             price, snapend, snapbuyers = lastrec['price'], lastrec['snapEnd'], lastrec['snapBuyers']
             price = '{:,}'.format(price)
             if snapend > time.time():
-                if ('<' in name and '>' in name and ('3' in name.split('<')[1] or '4' in name.split('<')[1])) or \
+                if ('<' in name and '>' in name and (('3' in name.split('<')[1] or '4' in name.split('<')[1]) or snapbuyers > 15)) or \
                 ('card' in name.lower() and snapbuyers > 15) or \
                 ('blueprint' in name.lower() and snapbuyers > 15) or \
                 ('fenril' in name.lower()) or \
@@ -67,9 +67,7 @@ def query():
                 ('+12 Rosa Bracelet' in name) or \
                 ('+12 Rune Boots' in name) or \
                 ('Survival Ring' in name and '<' in name and '>' in name) or \
-                ('+15' in name and snapbuyers > 2) or \
-                ('anti-mage' in name.lower()) or \
-                ('armor breaking; in name.lower()):
+                ('+15' in name and snapbuyers > 2):
                     if name.split(' ')[0].lower() not in ['harpy', 'familiar', 'munak', 'andre']:
                         if id_ not in ids:
                             record_dict[id_] = {'name': name, #.decode('ascii'), 
