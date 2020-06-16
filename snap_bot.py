@@ -63,12 +63,12 @@ def query():
                 ('card' in name.lower() and snapbuyers > 15) or \
                 ('blueprint' in name.lower() and snapbuyers > 15) or \
                 ('fenril' in name.lower()) or \
-                (snapbuyers > 100) and \
+                (snapbuyers > 100) or \
                 ('+12 Rosa Bracelet' in name) or \
                 ('+12 Rune Boots' in name) or \
                 ('Survival Ring' in name and '<' in name and '>' in name) or \
                 ('+15' in name and snapbuyers > 2):
-                    if name.split(' ')[0].lower() not in ['harpy', 'familiar', 'munak', 'andre']:
+                    if name.split(' ')[0].lower() not in ['harpy', 'familiar', 'munak', 'andre'] and 'andre' not in name.lower():
                         if id_ not in ids:
                             record_dict[id_] = {'name': name, #.decode('ascii'), 
                                                 'price': price,
