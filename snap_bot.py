@@ -26,7 +26,7 @@ def messenger(record_dict, csvf): # msgs, name, price, snapend, snapbuyers):
             msgs.append(name)
             msgs.append('Price: %s' %(price))
             msgs.append('#Bidders: %s' %(snapbuyers))
-            msgs.append('Snap End (EDT): %s' %("{:02d}:{:02d}".format(snapend.tm_hour, snapend.tm_min)))
+            msgs.append('Snap End (EST): %s' %("{:02d}:{:02d}".format(snapend.tm_hour, snapend.tm_min)))
             msgs.append('---------')
     msg = '\n'.join(msgs)
 
@@ -48,6 +48,13 @@ def query():
     # poring.world api request
     rarities = [1,2,3,4,5]
     record_dict = {}
+    record_dict2 = {}
+    searches = ["+15 Orleans's Server", "+15 Orleans's Server[1]", "+15 Peak Platter"]
+    searches += ["+15 Peak Platter[1]", "+13 Croce Staff"]
+    searches += ["+15 Tyre's Armor[1] <Arch 3>", "+15 Tyre's Armor[1] <Arch 4>"]
+    searches += ["+15 The Chosen's Armor", "+15 Staunch Armor"]
+    searches += ["+15 Rosa Chain", "+15 Rosa Bracelet"]
+    # searches = ["+15 tyre's armor"]
     for rarity in rarities:
         url = 'https://poring.world/api/search?order=popularity&rarity=%s&inStock=1&modified=&category=&endCategory=' %(rarity)
         req = requests.get(url)
@@ -64,19 +71,55 @@ def query():
                 ('blueprint' in name.lower() and snapbuyers > 15) or \
                 ('fenril' in name.lower()) or \
                 (snapbuyers > 100) or \
-                ('+12 Rosa Bracelet' in name) or \
+                ('+12 Rosa' in name) or \
                 ('+12 Rune Boots' in name) or \
                 ('Survival Ring' in name and '<' in name and '>' in name) or \
-                ('+15' in name and snapbuyers > 2):
-                    if name.split(' ')[0].lower() not in ['harpy', 'familiar', 'munak', 'andre'] and 'andre' not in name.lower():
-                        if id_ not in ids:
-                            record_dict[id_] = {'name': name, #.decode('ascii'), 
-                                                'price': price,
-                                                'snapend': snapend,
-                                                'snapbuyers': snapbuyers}
+                ('+15' in name and snapbuyers > 2) or \
+                ('Alchemy Beak' in name and 'broken' in name) or \
+                ('+12 Dog' in name) or \
+                ('+14 Glove' in name) or \
+                ('Angel Snow Feather' in name) or \
+                ('+15 Sacred Mission' in name) or \
+                ('+15 Giant Wing Shield' in name):
+                    if 'andre' not in name.lower() and 'familiar' not in name.lower() and \
+                    'harpy' not in name.lower() and 'munak' not in name.lower():
+                        if len(searches) > 0:
+                            for search in searches:
+                                if search in name:
+                                    pass
+                                else:
+                                    if id_ not in ids:
+                                        record_dict[id_] = {'name': name, #.decode('ascii'), 
+                                                            'price': price,
+                                                            'snapend': snapend,
+                                                            'snapbuyers': snapbuyers}
+                        else:
+                            if id_ not in ids:
+                                record_dict[id_] = {'name': name, #.decode('ascii'), 
+                                                    'price': price,
+                                                    'snapend': snapend,
+                                                    'snapbuyers': snapbuyers}
                     # msgs = messenger(msgs, name, price, time.localtime(snapend), snapbuyers)
                     # records = recorder(records, snapend, id_)
-        time.sleep(5)
+        time.sleep(10)
+    if len(searches) > 0:
+        for search in searches:
+            url_api = 'https://poring.world/api'
+            search = 'popularity&rarity=&inStock=1&modified=&category=&endCategory=&q=' + quote(search)
+            url = url_api + '/search?order=' + search
+            req = requests.get(url)
+            results = req.json()
+            if len(results) > 0:
+                for result in results:
+                    name, lastrec, id_ = html.unescape(result['name']), result['lastRecord'], result['id']
+                    price, snapend, snapbuyers = lastrec['price'], lastrec['snapEnd'], lastrec['snapBuyers']
+                    price = '{:,}'.format(price)
+                    if snapend > time.time():
+                        record_dict2[id_] = {'name': name, #.decode('ascii'), 
+                                            'price': price,
+                                            'snapend': snapend,
+                                            'snapbuyers': snapbuyers}
+            time.sleep(10)
         # if len(msgs) > 0:
         #     msg = '\n'.join(msgs)  
         #     df2 = pd.DataFrame(records)
@@ -128,7 +171,7 @@ def query():
 
     # msg2 = '\n'.join(msgs2)
 
-    return record_dict
+    return record_dict, record_dict2
 
 
 if __name__ == '__main__':
@@ -139,7 +182,8 @@ if __name__ == '__main__':
     with open('token.json', 'r') as f:
         tokens = json.load(f)
     TOKEN = tokens['bot_token']
-    id_keys = ['ro', 'arch', 'snow', 'bbx', 'doppel']
+    id_keys = ['ro', 'arch', 'snow', 'bbx', 'doppel', 'deity']
+    id_keys2 = ['chemarcher', 'MAgician']
     # id_keys = ['chemarcher']
 
     client = discord.Client()
@@ -154,7 +198,7 @@ if __name__ == '__main__':
             t0 = time.time()
             # msg2 = ''
             try:
-                record_dict = query()
+                record_dict, record_dict2 = query()
             except Exception as e:
                 user = client.get_user(tokens['chemarcher']) # chemarcher
                 await user.send(e)
@@ -174,6 +218,26 @@ if __name__ == '__main__':
                             channel = client.get_channel(id_)
                             await channel.send(msg)
                             recorder(record_dict, csvf)
+                except Exception as e:
+                    await client.wait_until_ready()
+                    user = client.get_user(tokens['chemarcher']) # chemarcher
+                    await user.send(e)
+                    pass
+            if record_dict2:
+                try:
+                    # write_dict(msg)
+                    #user = client.get_user(587469380372135960) # chemarcher
+                    #await user.send(msg)
+                    for id_key2 in id_keys2:
+                        id_ = tokens[id_key2]
+                        csvf = 'records_' + id_key2 + '.csv'
+                        msg = messenger(record_dict2, csvf)
+                        if msg != '':
+                            id_ = tokens[id_key2]
+                            await client.wait_until_ready()
+                            user = client.get_user(id_)
+                            await user.send(msg)
+                            recorder(record_dict2, csvf)
                 except Exception as e:
                     await client.wait_until_ready()
                     user = client.get_user(tokens['chemarcher']) # chemarcher
